@@ -9,15 +9,34 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    var images = [UIImageView]()
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let scrollViewWidth = scrollView.frame.size.width;
+        let contentSize:CGFloat = scrollViewWidth*3
+        for x in 0...2{
+            let image = UIImage(named: "icon\(x).png")
+            images.append(UIImageView(image: image))
+            
+            let newX = scrollViewWidth/2 + scrollViewWidth * CGFloat(x)
+            
+            scrollView.addSubview(images[x])
+            
+            images[x].frame = CGRect(x: newX-75, y: (scrollView.frame.height/2)-75, width: 150, height: 150)
+            
+        }
+        scrollView.contentSize = CGSize(width: contentSize, height: scrollView.frame.height)
+        scrollView.clipsToBounds = false
+        view.addGestureRecognizer(scrollView.panGestureRecognizer)
+        print("the count = \(images.count)")
     }
 
 
